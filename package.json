@@ -1,0 +1,16 @@
+{
+  "name": "build-my-startup",
+  "version": "2.0.0",
+  "private": true,
+  "description": "AI-powered startup idea generator. Frontend (HTML/CSS/JS) + a serverless backend that calls the Claude API.",
+  "scripts": {
+    "build": "echo Static files ready",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
