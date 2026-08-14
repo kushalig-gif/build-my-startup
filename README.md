@@ -1,4 +1,51 @@
-# 🚀 Build My Startup — V2
+# 🚀 Build My Startup
+
+An AI-powered web application that transforms a startup idea into a structured startup blueprint.
+
+Users enter a simple business idea, and the application uses Google's Gemini API to generate a detailed analysis covering the problem, target audience, solution, features, competitors, business model, MVP, roadmap, technology stack, and more.
+
+🌐 **Live Demo:** https://build-my-startup.vercel.app
+
+---
+
+## ✨ Features
+
+- 💡 Startup idea analysis
+- 🎯 Target audience identification
+- 🔍 Problem and solution analysis
+- ⚡ AI-generated startup features
+- 🏆 Competitor analysis
+- 💰 Business model and pricing suggestions
+- 📈 Market opportunity analysis
+- 🚀 Go-to-market strategy
+- 🧪 MVP planning
+- 🗺️ Product roadmap
+- 💻 Recommended technology stack
+- 📊 Startup scoring
+- ✅ AI-generated validation verdict
+
+---
+
+## 🧠 How It Works
+
+```text
+User enters startup idea
+        ↓
+Frontend sends request
+        ↓
+Vercel Serverless API
+        ↓
+Gemini API
+        ↓
+AI-generated JSON response
+        ↓
+JSON extraction & normalization
+        ↓
+Blueprint validation
+        ↓
+Structured startup blueprint
+        ↓
+Displayed on the website# 🚀 Build My Startup — V2
 
 Describe a startup idea in plain English, click **Build My Startup**, and get back a
 complete, AI-generated startup blueprint: problem, solution, features, competitors,
