@@ -11,7 +11,7 @@
  */
 
 const DEFAULT_MODEL =
-  process.env.GEMINI_MODEL || "gemini-3.6-flash";
+  process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
 
 // Gemini 3.6 Flash supports up to 65,536 output tokens.
 // 16k is more than enough for this blueprint while avoiding
@@ -20,8 +20,7 @@ const MAX_OUTPUT_TOKENS =
   Number(process.env.GEMINI_MAX_OUTPUT_TOKENS) || 16384;
 
 const REQUEST_TIMEOUT_MS =
-  Number(process.env.GEMINI_TIMEOUT_MS) || 30000;
-
+  Number(process.env.GEMINI_TIMEOUT_MS) || 120000;
 
 /**
  * Error type used by the Gemini provider.
@@ -34,7 +33,6 @@ class ProviderError extends Error {
     this.rawBody = rawBody;
   }
 }
-
 
 /**
  * JSON schema for the exact blueprint expected by the frontend.
@@ -52,16 +50,20 @@ const BLUEPRINT_SCHEMA = {
         name: {
           type: "string"
         },
+
         tagline: {
           type: "string"
         },
+
         description: {
           type: "string"
         },
+
         category: {
           type: "string"
         }
       },
+
       required: [
         "name",
         "tagline",
@@ -76,17 +78,21 @@ const BLUEPRINT_SCHEMA = {
 
     targetAudience: {
       type: "object",
+
       properties: {
         primary: {
           type: "string"
         },
+
         secondary: {
           type: "string"
         },
+
         idealCustomer: {
           type: "string"
         }
       },
+
       required: [
         "primary",
         "secondary",
@@ -100,19 +106,24 @@ const BLUEPRINT_SCHEMA = {
 
     features: {
       type: "array",
+
       items: {
         type: "object",
+
         properties: {
           name: {
             type: "string"
           },
+
           explanation: {
             type: "string"
           },
+
           whyItMatters: {
             type: "string"
           }
         },
+
         required: [
           "name",
           "explanation",
@@ -127,22 +138,28 @@ const BLUEPRINT_SCHEMA = {
 
     competitors: {
       type: "array",
+
       items: {
         type: "object",
+
         properties: {
           name: {
             type: "string"
           },
+
           whatTheyDo: {
             type: "string"
           },
+
           strength: {
             type: "string"
           },
+
           weakness: {
             type: "string"
           }
         },
+
         required: [
           "name",
           "whatTheyDo",
@@ -158,34 +175,44 @@ const BLUEPRINT_SCHEMA = {
 
     businessModel: {
       type: "object",
+
       properties: {
         revenueModel: {
           type: "string"
         },
+
         primaryRevenueSource: {
           type: "string"
         },
+
         secondaryRevenueSource: {
           type: "string"
         },
+
         pricingTiers: {
           type: "array",
+
           items: {
             type: "object",
+
             properties: {
               name: {
                 type: "string"
               },
+
               price: {
                 type: "string"
               },
+
               features: {
                 type: "array",
+
                 items: {
                   type: "string"
                 }
               }
             },
+
             required: [
               "name",
               "price",
@@ -193,10 +220,12 @@ const BLUEPRINT_SCHEMA = {
             ]
           }
         },
+
         pricingNote: {
           type: "string"
         }
       },
+
       required: [
         "revenueModel",
         "primaryRevenueSource",
@@ -208,6 +237,7 @@ const BLUEPRINT_SCHEMA = {
 
     marketOpportunity: {
       type: "object",
+
       properties: {
         marketPotential: {
           type: "string",
@@ -217,6 +247,7 @@ const BLUEPRINT_SCHEMA = {
             "High"
           ]
         },
+
         demand: {
           type: "string",
           enum: [
@@ -225,6 +256,7 @@ const BLUEPRINT_SCHEMA = {
             "High"
           ]
         },
+
         competition: {
           type: "string",
           enum: [
@@ -233,6 +265,7 @@ const BLUEPRINT_SCHEMA = {
             "High"
           ]
         },
+
         difficulty: {
           type: "string",
           enum: [
@@ -241,10 +274,12 @@ const BLUEPRINT_SCHEMA = {
             "High"
           ]
         },
+
         reasoning: {
           type: "string"
         }
       },
+
       required: [
         "marketPotential",
         "demand",
@@ -256,16 +291,20 @@ const BLUEPRINT_SCHEMA = {
 
     goToMarket: {
       type: "array",
+
       items: {
         type: "object",
+
         properties: {
           title: {
             type: "string"
           },
+
           description: {
             type: "string"
           }
         },
+
         required: [
           "title",
           "description"
@@ -275,26 +314,33 @@ const BLUEPRINT_SCHEMA = {
 
     mvp: {
       type: "object",
+
       properties: {
         mustHave: {
           type: "array",
+
           items: {
             type: "string"
           }
         },
+
         niceToHave: {
           type: "array",
+
           items: {
             type: "string"
           }
         },
+
         dontBuildYet: {
           type: "array",
+
           items: {
             type: "string"
           }
         }
       },
+
       required: [
         "mustHave",
         "niceToHave",
@@ -304,19 +350,24 @@ const BLUEPRINT_SCHEMA = {
 
     roadmap: {
       type: "array",
+
       items: {
         type: "object",
+
         properties: {
           phase: {
             type: "string"
           },
+
           title: {
             type: "string"
           },
+
           description: {
             type: "string"
           }
         },
+
         required: [
           "phase",
           "title",
@@ -327,17 +378,21 @@ const BLUEPRINT_SCHEMA = {
 
     techStack: {
       type: "object",
+
       properties: {
         frontend: {
           type: "object",
+
           properties: {
             choice: {
               type: "string"
             },
+
             why: {
               type: "string"
             }
           },
+
           required: [
             "choice",
             "why"
@@ -346,14 +401,17 @@ const BLUEPRINT_SCHEMA = {
 
         backend: {
           type: "object",
+
           properties: {
             choice: {
               type: "string"
             },
+
             why: {
               type: "string"
             }
           },
+
           required: [
             "choice",
             "why"
@@ -362,14 +420,17 @@ const BLUEPRINT_SCHEMA = {
 
         database: {
           type: "object",
+
           properties: {
             choice: {
               type: "string"
             },
+
             why: {
               type: "string"
             }
           },
+
           required: [
             "choice",
             "why"
@@ -378,14 +439,17 @@ const BLUEPRINT_SCHEMA = {
 
         ai: {
           type: "object",
+
           properties: {
             choice: {
               type: "string"
             },
+
             why: {
               type: "string"
             }
           },
+
           required: [
             "choice",
             "why"
@@ -394,14 +458,17 @@ const BLUEPRINT_SCHEMA = {
 
         authentication: {
           type: "object",
+
           properties: {
             choice: {
               type: "string"
             },
+
             why: {
               type: "string"
             }
           },
+
           required: [
             "choice",
             "why"
@@ -410,14 +477,17 @@ const BLUEPRINT_SCHEMA = {
 
         payments: {
           type: "object",
+
           properties: {
             choice: {
               type: "string"
             },
+
             why: {
               type: "string"
             }
           },
+
           required: [
             "choice",
             "why"
@@ -426,14 +496,17 @@ const BLUEPRINT_SCHEMA = {
 
         hosting: {
           type: "object",
+
           properties: {
             choice: {
               type: "string"
             },
+
             why: {
               type: "string"
             }
           },
+
           required: [
             "choice",
             "why"
@@ -454,23 +527,29 @@ const BLUEPRINT_SCHEMA = {
 
     score: {
       type: "object",
+
       properties: {
         overall: {
           type: "integer"
         },
+
         marketPotential: {
           type: "integer"
         },
+
         problemStrength: {
           type: "integer"
         },
+
         differentiation: {
           type: "integer"
         },
+
         feasibility: {
           type: "integer"
         }
       },
+
       required: [
         "overall",
         "marketPotential",
@@ -482,25 +561,31 @@ const BLUEPRINT_SCHEMA = {
 
     verdict: {
       type: "object",
+
       properties: {
         decision: {
           type: "string",
+
           enum: [
             "BUILD",
             "VALIDATE FIRST",
             "RECONSIDER"
           ]
         },
+
         reason: {
           type: "string"
         },
+
         biggestOpportunity: {
           type: "string"
         },
+
         biggestRisk: {
           type: "string"
         }
       },
+
       required: [
         "decision",
         "reason",
@@ -581,6 +666,7 @@ IMPORTANT OUTPUT RULES:
     contents: [
       {
         role: "user",
+
         parts: [
           {
             text: userPrompt
@@ -600,66 +686,337 @@ IMPORTANT OUTPUT RULES:
     }
   };
 
-  const controller =
-    new AbortController();
 
-  const timeout =
-    setTimeout(
-      () => controller.abort(),
-      REQUEST_TIMEOUT_MS
-    );
+  // --------------------------------------------------
+  // GEMINI REQUEST WITH RETRY / EXPONENTIAL BACKOFF
+  // --------------------------------------------------
 
-  let response;
+  const MAX_RETRIES = 3;
 
-  try {
-    response = await fetch(
-      url,
-      {
-        method: "POST",
+  let response = null;
+  let lastError = null;
 
-        headers: {
-          "Content-Type":
-            "application/json",
+  for (
+    let attempt = 1;
+    attempt <= MAX_RETRIES;
+    attempt++
+  ) {
 
-          "x-goog-api-key":
-            apiKey
-        },
+    const controller =
+      new AbortController();
 
-        body:
-          JSON.stringify(requestBody),
+    const timeout =
+      setTimeout(
+        () => controller.abort(),
+        REQUEST_TIMEOUT_MS
+      );
 
-        signal:
-          controller.signal
-      }
-    );
-  } catch (err) {
-    clearTimeout(timeout);
+    try {
 
-    if (
-      err &&
-      err.name === "AbortError"
-    ) {
-      throw new ProviderError(
-        "Gemini request timed out.",
+      console.log(
+        `[generate] Gemini request attempt ${attempt}/${MAX_RETRIES}`
+      );
+
+      response = await fetch(
+        url,
         {
-          status: 504
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+
+            "x-goog-api-key":
+              apiKey
+          },
+
+          body:
+            JSON.stringify(
+              requestBody
+            ),
+
+          signal:
+            controller.signal
         }
       );
+
+      clearTimeout(timeout);
+
+
+      // ------------------------------------------------
+      // SUCCESS
+      // ------------------------------------------------
+
+      if (response.ok) {
+        break;
+      }
+
+
+      // ------------------------------------------------
+      // READ ERROR RESPONSE
+      // ------------------------------------------------
+
+      const retryBody =
+        await response.text();
+
+      const parsedRetryError =
+        safeJsonParse(
+          retryBody
+        );
+
+      const retryMessage =
+        parsedRetryError &&
+        parsedRetryError.error &&
+        parsedRetryError.error.message
+          ? parsedRetryError.error.message
+          : `Gemini request failed with status ${response.status}`;
+
+      lastError = {
+        status:
+          response.status,
+
+        message:
+          retryMessage,
+
+        rawBody:
+          retryBody
+      };
+
+      console.error(
+        "========== GEMINI HTTP ERROR =========="
+      );
+
+      console.error(
+        "Attempt:",
+        `${attempt}/${MAX_RETRIES}`
+      );
+
+      console.error(
+        "Status:",
+        response.status
+      );
+
+      console.error(
+        "Message:",
+        retryMessage
+      );
+
+
+      // ------------------------------------------------
+      // RETRY TEMPORARY ERRORS
+      // ------------------------------------------------
+
+      const retryable =
+        response.status === 408 ||
+        response.status === 429 ||
+        response.status === 500 ||
+        response.status === 502 ||
+        response.status === 503 ||
+        response.status === 504;
+
+      if (
+        !retryable ||
+        attempt === MAX_RETRIES
+      ) {
+
+        throw new ProviderError(
+          retryMessage,
+          {
+            status:
+              response.status,
+
+            rawBody:
+              retryBody.slice(
+                0,
+                4000
+              )
+          }
+        );
+      }
+
+
+      // ------------------------------------------------
+      // EXPONENTIAL BACKOFF
+      // 1.5s -> 3s -> 6s
+      // with small random jitter
+      // ------------------------------------------------
+
+      const baseDelay =
+        1500 *
+        Math.pow(
+          2,
+          attempt - 1
+        );
+
+      const jitter =
+        Math.floor(
+          Math.random() * 500
+        );
+
+      const delay =
+        baseDelay + jitter;
+
+      console.log(
+        `[generate] Gemini returned ${response.status}. ` +
+        `Retrying in ${delay}ms...`
+      );
+
+      await new Promise(
+        (resolve) =>
+          setTimeout(
+            resolve,
+            delay
+          )
+      );
+
+    } catch (err) {
+
+      clearTimeout(timeout);
+
+
+      // ------------------------------------------------
+      // TIMEOUT
+      // ------------------------------------------------
+
+      if (
+        err &&
+        err.name === "AbortError"
+      ) {
+
+        console.error(
+          `[generate] Gemini request timed out on attempt ` +
+          `${attempt}/${MAX_RETRIES}.`
+        );
+
+        lastError =
+          new ProviderError(
+            "Gemini request timed out.",
+            {
+              status: 504
+            }
+          );
+
+        if (
+          attempt === MAX_RETRIES
+        ) {
+          throw lastError;
+        }
+
+        const delay =
+          1500 *
+          Math.pow(
+            2,
+            attempt - 1
+          );
+
+        console.log(
+          `[generate] Retrying after timeout in ${delay}ms...`
+        );
+
+        await new Promise(
+          (resolve) =>
+            setTimeout(
+              resolve,
+              delay
+            )
+        );
+
+        continue;
+      }
+
+
+      // ------------------------------------------------
+      // PROVIDER ERROR
+      // ------------------------------------------------
+
+      if (
+        err instanceof ProviderError
+      ) {
+        throw err;
+      }
+
+
+      // ------------------------------------------------
+      // NETWORK ERROR
+      // ------------------------------------------------
+
+      console.error(
+        "[generate] Network error calling Gemini:",
+        err
+      );
+
+      if (
+        attempt === MAX_RETRIES
+      ) {
+
+        throw new ProviderError(
+          `Network error calling Gemini: ${
+            err && err.message
+              ? err.message
+              : "Unknown network error"
+          }`,
+          {
+            status:
+              undefined
+          }
+        );
+      }
+
+      const delay =
+        1500 *
+        Math.pow(
+          2,
+          attempt - 1
+        );
+
+      console.log(
+        `[generate] Retrying network error in ${delay}ms...`
+      );
+
+      await new Promise(
+        (resolve) =>
+          setTimeout(
+            resolve,
+            delay
+          )
+      );
     }
+  }
+
+
+  // --------------------------------------------------
+  // FINAL SAFETY CHECK
+  // --------------------------------------------------
+
+  if (
+    !response ||
+    !response.ok
+  ) {
 
     throw new ProviderError(
-      `Network error calling Gemini: ${
-        err && err.message
-          ? err.message
-          : "Unknown network error"
-      }`,
+      lastError &&
+      lastError.message
+        ? lastError.message
+        : "Gemini request failed after retries.",
+
       {
-        status: undefined
+        status:
+          lastError
+            ? lastError.status
+            : 502,
+
+        rawBody:
+          lastError &&
+          lastError.rawBody
+            ? lastError.rawBody.slice(
+                0,
+                4000
+              )
+            : undefined
       }
     );
   }
 
-  clearTimeout(timeout);
 
   /*
    * ALWAYS read text first.
@@ -667,10 +1024,15 @@ IMPORTANT OUTPUT RULES:
   const rawBody =
     await response.text();
 
+
   /*
    * HTTP-level Gemini error.
+   *
+   * This should normally never happen here
+   * because non-OK responses are handled above.
    */
   if (!response.ok) {
+
     console.error(
       "========== GEMINI HTTP ERROR =========="
     );
@@ -682,11 +1044,16 @@ IMPORTANT OUTPUT RULES:
 
     console.error(
       "body:",
-      rawBody.slice(0, 4000)
+      rawBody.slice(
+        0,
+        4000
+      )
     );
 
     const parsedError =
-      safeJsonParse(rawBody);
+      safeJsonParse(
+        rawBody
+      );
 
     const message =
       parsedError &&
@@ -698,38 +1065,55 @@ IMPORTANT OUTPUT RULES:
     throw new ProviderError(
       message,
       {
-        status: response.status,
+        status:
+          response.status,
+
         rawBody:
-          rawBody.slice(0, 4000)
+          rawBody.slice(
+            0,
+            4000
+          )
       }
     );
   }
+
 
   /*
    * Parse Gemini's HTTP response.
    */
   const data =
-    safeJsonParse(rawBody);
+    safeJsonParse(
+      rawBody
+    );
 
   if (!data) {
+
     console.error(
       "Gemini returned HTTP 200 but the body was not valid JSON."
     );
 
     console.error(
       "BODY:",
-      rawBody.slice(0, 4000)
+      rawBody.slice(
+        0,
+        4000
+      )
     );
 
     throw new ProviderError(
       "Gemini returned an unreadable response.",
       {
         status: 502,
+
         rawBody:
-          rawBody.slice(0, 4000)
+          rawBody.slice(
+            0,
+            4000
+          )
       }
     );
   }
+
 
   /*
    * Check for candidates.
@@ -739,6 +1123,7 @@ IMPORTANT OUTPUT RULES:
     data.candidates[0];
 
   if (!candidate) {
+
     console.error(
       "Gemini response contained no candidates."
     );
@@ -748,21 +1133,28 @@ IMPORTANT OUTPUT RULES:
         data,
         null,
         2
-      ).slice(0, 4000)
+      ).slice(
+        0,
+        4000
+      )
     );
 
     throw new ProviderError(
       "Gemini returned no candidates.",
       {
         status: 502,
+
         rawBody:
-          JSON.stringify(data).slice(
+          JSON.stringify(
+            data
+          ).slice(
             0,
             4000
           )
       }
     );
   }
+
 
   /*
    * Check finish reason.
@@ -774,6 +1166,7 @@ IMPORTANT OUTPUT RULES:
     finishReason &&
     finishReason !== "STOP"
   ) {
+
     console.error(
       "Gemini finishReason:",
       finishReason
@@ -783,14 +1176,19 @@ IMPORTANT OUTPUT RULES:
       finishReason ===
       "MAX_TOKENS"
     ) {
+
       throw new ProviderError(
         "Gemini stopped because the output reached the maximum token limit.",
         {
           status: 502,
+
           rawBody:
             JSON.stringify(
               candidate
-            ).slice(0, 4000)
+            ).slice(
+              0,
+              4000
+            )
         }
       );
     }
@@ -799,14 +1197,19 @@ IMPORTANT OUTPUT RULES:
       finishReason ===
       "SAFETY"
     ) {
+
       throw new ProviderError(
         "Gemini blocked the response because of its safety filters.",
         {
           status: 502,
+
           rawBody:
             JSON.stringify(
               candidate
-            ).slice(0, 4000)
+            ).slice(
+              0,
+              4000
+            )
         }
       );
     }
@@ -815,13 +1218,18 @@ IMPORTANT OUTPUT RULES:
       `Gemini stopped generation with finish reason: ${finishReason}`,
       {
         status: 502,
+
         rawBody:
           JSON.stringify(
             candidate
-          ).slice(0, 4000)
+          ).slice(
+            0,
+            4000
+          )
       }
     );
   }
+
 
   /*
    * Extract model text.
@@ -848,6 +1256,7 @@ IMPORTANT OUTPUT RULES:
       .trim();
 
   if (!text) {
+
     console.error(
       "Gemini candidate contained no text."
     );
@@ -857,20 +1266,28 @@ IMPORTANT OUTPUT RULES:
         candidate,
         null,
         2
-      ).slice(0, 4000)
+      ).slice(
+        0,
+        4000
+      )
     );
 
     throw new ProviderError(
       "Gemini returned an empty response.",
       {
         status: 502,
+
         rawBody:
           JSON.stringify(
             candidate
-          ).slice(0, 4000)
+          ).slice(
+            0,
+            4000
+          )
       }
     );
   }
+
 
   console.log(
     "========== GEMINI SUCCESS =========="
@@ -899,6 +1316,7 @@ IMPORTANT OUTPUT RULES:
  * Safe JSON parser.
  */
 function safeJsonParse(value) {
+
   if (
     !value ||
     typeof value !== "string"

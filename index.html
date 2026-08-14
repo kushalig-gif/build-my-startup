@@ -3,163 +3,576 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Build My Startup — Turn Your Idea Into a Startup</title>
-<meta name="description" content="Describe a startup idea and get a complete, AI-generated startup blueprint in seconds.">
+
+<meta
+  name="description"
+  content="Describe a startup idea and get a complete, AI-generated startup blueprint in seconds."
+>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+  rel="stylesheet"
+>
+
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
 <input type="checkbox" id="theme-toggle" aria-hidden="true">
+
 <div class="page">
 
-<header>
-  <nav>
-    <a class="logo" href="#top"><span>🚀</span> Build My Startup</a>
-    <input type="checkbox" id="nav-toggle" class="nav-toggle">
-    <ul class="nav-links">
-      <li><a href="#how-it-works">How It Works</a></li>
-      <li><a href="#builder">Build</a></li>
-      <li><a href="#about">About</a></li>
-      <li class="nav-cta"><a class="btn btn-primary btn-nav" href="#builder">Build an Idea</a></li>
-    </ul>
-    <div class="nav-right">
-      <label class="theme-switch" for="theme-toggle" aria-label="Toggle dark mode">
-        <span class="ts-icon">☀</span>
-        <span class="ts-track"><span class="ts-thumb"></span></span>
-        <span class="ts-icon">☾</span>
-      </label>
-      <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation menu"><span></span></label>
-    </div>
-  </nav>
-</header>
+  <!-- ================= HEADER ================= -->
 
-<main id="top">
+  <header>
+    <nav>
 
-  <!-- ============ HERO / INPUT ============ -->
-  <section class="hero" id="how-it-works">
-    <div class="ambient"><div class="orb one"></div><div class="orb two"></div><div class="orb three"></div></div>
-    <div class="wrap hero-inner">
-      <span class="badge">✨ AI-Powered Startup Builder</span>
-      <h1>Turn Your Idea Into <span class="grad-text">a Startup.</span></h1>
-      <p class="sub">Describe your idea. Claude turns it into a complete startup blueprint — for real, not a demo.</p>
+      <a class="logo" href="#top">
+        <span>🚀</span> Build My Startup
+      </a>
 
-      <form class="builder-card" id="builder" novalidate>
-        <label class="builder-label" for="idea-input">What do you want to build?</label>
-        <textarea
-          class="builder-input"
-          id="idea-input"
-          maxlength="600"
-          placeholder="I want to build an app that helps college students find internships."
-          aria-describedby="idea-error"
-        ></textarea>
-        <div class="char-count"><span id="char-count">0</span> / 600</div>
-        <p class="field-error" id="idea-error">Describe your idea in a sentence or two before building.</p>
+      <input
+        type="checkbox"
+        id="nav-toggle"
+        class="nav-toggle"
+      >
 
-        <div class="chips">
-          <button type="button" class="chip" data-fill="An AI productivity app that turns meeting notes into action items.">AI productivity app</button>
-          <button type="button" class="chip" data-fill="A FinTech app that helps freelancers set aside money for taxes automatically.">FinTech startup</button>
-          <button type="button" class="chip" data-fill="An EdTech platform that creates personalized study plans from a syllabus.">EdTech platform</button>
-          <button type="button" class="chip" data-fill="A HealthTech app that reminds elderly patients to take medication and alerts family if they miss a dose.">HealthTech idea</button>
-        </div>
+      <ul class="nav-links">
 
-        <div class="builder-footer">
-          <button type="submit" class="btn btn-primary build-btn" id="build-btn">✨ Build My Startup</button>
-          <span class="builder-hint">Turn a simple idea into a launch-ready startup concept.</span>
-        </div>
-      </form>
-    </div>
-  </section>
+        <li>
+          <a href="#how-it-works">
+            How It Works
+          </a>
+        </li>
 
-  <!-- ============ LOADING STATE ============ -->
-  <section id="loading-section" class="hidden" aria-live="polite">
-    <div class="wrap">
-      <div class="loading-wrap">
-        <div class="loading-title"><span class="pulse-dot"></span> Analyzing your idea…</div>
-        <div class="step-list" id="step-list">
-          <div class="step-item" data-step="0"><span class="step-check"></span> Understanding your idea</div>
-          <div class="step-item" data-step="1"><span class="step-check"></span> Identifying the target audience</div>
-          <div class="step-item" data-step="2"><span class="step-check"></span> Analyzing the problem</div>
-          <div class="step-item" data-step="3"><span class="step-check"></span> Designing the solution</div>
-          <div class="step-item" data-step="4"><span class="step-check"></span> Creating the business model</div>
-          <div class="step-item" data-step="5"><span class="step-check"></span> Building your startup blueprint</div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <li>
+          <a href="#builder">
+            Build
+          </a>
+        </li>
 
-  <!-- ============ ERROR STATE ============ -->
-  <section id="error-section" class="hidden">
-    <div class="wrap">
-      <div class="error-wrap">
-        <div class="error-icon">⚠️</div>
-        <div class="error-title">Something went wrong while building your startup.</div>
-        <p class="error-msg" id="error-msg">The AI couldn't complete your blueprint. This is usually temporary.</p>
-        <button class="btn btn-primary" id="retry-btn">Try Again</button>
-      </div>
-    </div>
-  </section>
+        <li>
+          <a href="#about">
+            About
+          </a>
+        </li>
 
-  <!-- ============ RESULTS (rendered by script.js) ============ -->
-  <section id="results" class="hidden">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Your Startup Blueprint</span>
-        <h2>From idea <span class="grad-text">→ startup</span></h2>
-      </div>
-      <div id="results-content"><!-- populated dynamically --></div>
+        <li class="nav-cta">
+          <a
+            class="btn btn-primary btn-nav"
+            href="#builder"
+          >
+            Build an Idea
+          </a>
+        </li>
 
-      <div class="result-actions">
-        <button class="btn btn-ghost btn-sm" id="btn-again">🔄 Build Another Idea</button>
-        <button class="btn btn-ghost btn-sm" id="btn-copy">📋 Copy Blueprint</button>
-        <button class="btn btn-ghost btn-sm" id="btn-export">📄 Export Blueprint</button>
-        <button class="btn btn-ghost btn-sm" id="btn-share">🔗 Share</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ ABOUT ============ -->
-  <section class="alt" id="about">
-    <div class="wrap" style="text-align:center; max-width:640px;">
-      <span class="eyebrow" style="justify-content:center;">About</span>
-      <h2 style="margin-top:12px; font-size:clamp(24px,3vw,32px);">How this works</h2>
-      <p style="margin-top:14px; color:var(--navy-soft); font-size:15px; line-height:1.6;">
-        Your idea is sent to a small serverless function, which asks Claude to act as a startup strategist
-        and return a structured blueprint. Nothing is hardcoded — every result reflects what you typed.
-        Your API key never touches the browser.
-      </p>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  <div class="wrap">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a class="logo" href="#top">🚀 Build My Startup</a>
-        <p>From idea to startup — powered by Claude.</p>
-      </div>
-      <ul class="footer-links">
-        <li><a href="#how-it-works">How It Works</a></li>
-        <li><a href="#builder">Build</a></li>
-        <li><a href="#about">About</a></li>
       </ul>
+
+      <div class="nav-right">
+
+        <label
+          class="theme-switch"
+          for="theme-toggle"
+          aria-label="Toggle dark mode"
+        >
+          <span class="ts-icon">☀</span>
+
+          <span class="ts-track">
+            <span class="ts-thumb"></span>
+          </span>
+
+          <span class="ts-icon">☾</span>
+        </label>
+
+        <label
+          for="nav-toggle"
+          class="nav-toggle-label"
+          aria-label="Toggle navigation menu"
+        >
+          <span></span>
+        </label>
+
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- ================= MAIN ================= -->
+
+  <main id="top">
+
+    <!-- ================= HERO / INPUT ================= -->
+
+    <section
+      class="hero"
+      id="how-it-works"
+    >
+
+      <div class="ambient">
+        <div class="orb one"></div>
+        <div class="orb two"></div>
+        <div class="orb three"></div>
+      </div>
+
+      <div class="wrap hero-inner">
+
+        <span class="badge">
+          ✨ AI-Powered Startup Builder
+        </span>
+
+        <h1>
+          Turn Your Idea Into
+          <span class="grad-text">
+            a Startup.
+          </span>
+        </h1>
+
+        <p class="sub">
+          Describe your idea. Claude turns it into a complete startup blueprint — for real, not a demo.
+        </p>
+
+
+        <!-- ================= BUILDER ================= -->
+
+        <form
+          class="builder-card"
+          id="builder"
+          novalidate
+        >
+
+          <label
+            class="builder-label"
+            for="idea-input"
+          >
+            What do you want to build?
+          </label>
+
+
+          <!--
+            IMPORTANT:
+            Startup idea maximum length is 60 characters.
+          -->
+
+          <textarea
+            class="builder-input"
+            id="idea-input"
+            maxlength="60"
+            placeholder="I want to build an app that helps college students find internships."
+            aria-describedby="idea-error char-count"
+          ></textarea>
+
+
+          <!-- CHARACTER COUNTER -->
+
+          <div
+            class="char-count"
+            aria-live="polite"
+          >
+            <span id="char-count">0</span> / 60
+          </div>
+
+
+          <!-- ERROR MESSAGE -->
+
+          <p
+            class="field-error"
+            id="idea-error"
+          >
+            Describe your idea in a sentence or two before building.
+          </p>
+
+
+          <!-- ================= SUGGESTIONS ================= -->
+
+          <div class="chips">
+
+            <button
+              type="button"
+              class="chip"
+              data-fill="AI app that helps people work faster"
+            >
+              AI productivity app
+            </button>
+
+
+            <button
+              type="button"
+              class="chip"
+              data-fill="FinTech app that helps freelancers save for taxes"
+            >
+              FinTech startup
+            </button>
+
+
+            <button
+              type="button"
+              class="chip"
+              data-fill="EdTech app that helps students learn better"
+            >
+              EdTech platform
+            </button>
+
+
+            <button
+              type="button"
+              class="chip"
+              data-fill="HealthTech app that helps people track wellness"
+            >
+              HealthTech idea
+            </button>
+
+          </div>
+
+
+          <!-- ================= BUILD BUTTON ================= -->
+
+          <div class="builder-footer">
+
+            <button
+              type="submit"
+              class="btn btn-primary build-btn"
+              id="build-btn"
+            >
+              ✨ Build My Startup
+            </button>
+
+            <span class="builder-hint">
+              Turn a simple idea into a launch-ready startup concept.
+            </span>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= LOADING STATE ================= -->
+
+    <section
+      id="loading-section"
+      class="hidden"
+      aria-live="polite"
+    >
+
+      <div class="wrap">
+
+        <div class="loading-wrap">
+
+          <div class="loading-title">
+            <span class="pulse-dot"></span>
+            Analyzing your idea…
+          </div>
+
+          <div
+            class="step-list"
+            id="step-list"
+          >
+
+            <div
+              class="step-item"
+              data-step="0"
+            >
+              <span class="step-check"></span>
+              Understanding your idea
+            </div>
+
+            <div
+              class="step-item"
+              data-step="1"
+            >
+              <span class="step-check"></span>
+              Identifying the target audience
+            </div>
+
+            <div
+              class="step-item"
+              data-step="2"
+            >
+              <span class="step-check"></span>
+              Analyzing the problem
+            </div>
+
+            <div
+              class="step-item"
+              data-step="3"
+            >
+              <span class="step-check"></span>
+              Designing the solution
+            </div>
+
+            <div
+              class="step-item"
+              data-step="4"
+            >
+              <span class="step-check"></span>
+              Creating the business model
+            </div>
+
+            <div
+              class="step-item"
+              data-step="5"
+            >
+              <span class="step-check"></span>
+              Building your startup blueprint
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= ERROR STATE ================= -->
+
+    <section
+      id="error-section"
+      class="hidden"
+    >
+
+      <div class="wrap">
+
+        <div class="error-wrap">
+
+          <div class="error-icon">
+            ⚠️
+          </div>
+
+          <div class="error-title">
+            Something went wrong while building your startup.
+          </div>
+
+          <p
+            class="error-msg"
+            id="error-msg"
+          >
+            The AI couldn't complete your blueprint. This is usually temporary.
+          </p>
+
+          <button
+            class="btn btn-primary"
+            id="retry-btn"
+          >
+            Try Again
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= RESULTS ================= -->
+
+    <section
+      id="results"
+      class="hidden"
+    >
+
+      <div class="wrap">
+
+        <div class="section-head">
+
+          <span class="eyebrow">
+            Your Startup Blueprint
+          </span>
+
+          <h2>
+            From idea
+            <span class="grad-text">
+              → startup
+            </span>
+          </h2>
+
+        </div>
+
+
+        <div id="results-content">
+          <!-- populated dynamically by script.js -->
+        </div>
+
+
+        <div class="result-actions">
+
+          <button
+            class="btn btn-ghost btn-sm"
+            id="btn-again"
+          >
+            🔄 Build Another Idea
+          </button>
+
+          <button
+            class="btn btn-ghost btn-sm"
+            id="btn-copy"
+          >
+            📋 Copy Blueprint
+          </button>
+
+          <button
+            class="btn btn-ghost btn-sm"
+            id="btn-export"
+          >
+            📄 Export Blueprint
+          </button>
+
+          <button
+            class="btn btn-ghost btn-sm"
+            id="btn-share"
+          >
+            🔗 Share
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= ABOUT ================= -->
+
+    <section
+      class="alt"
+      id="about"
+    >
+
+      <div
+        class="wrap"
+        style="text-align:center; max-width:640px;"
+      >
+
+        <span
+          class="eyebrow"
+          style="justify-content:center;"
+        >
+          About
+        </span>
+
+        <h2
+          style="
+            margin-top:12px;
+            font-size:clamp(24px,3vw,32px);
+          "
+        >
+          How this works
+        </h2>
+
+        <p
+          style="
+            margin-top:14px;
+            color:var(--navy-soft);
+            font-size:15px;
+            line-height:1.6;
+          "
+        >
+          Your idea is sent to a small serverless function, which asks Claude to act as a startup strategist
+          and return a structured blueprint. Nothing is hardcoded — every result reflects what you typed.
+          Your API key never touches the browser.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+    <div class="wrap">
+
+      <div class="footer-top">
+
+        <div class="footer-brand">
+
+          <a
+            class="logo"
+            href="#top"
+          >
+            🚀 Build My Startup
+          </a>
+
+          <p>
+            From idea to startup — powered by Claude.
+          </p>
+
+        </div>
+
+
+        <ul class="footer-links">
+
+          <li>
+            <a href="#how-it-works">
+              How It Works
+            </a>
+          </li>
+
+          <li>
+            <a href="#builder">
+              Build
+            </a>
+          </li>
+
+          <li>
+            <a href="#about">
+              About
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+
+      <div class="footer-bottom">
+        © 2026 Build My Startup
+      </div>
+
     </div>
-    <div class="footer-bottom">© 2026 Build My Startup</div>
-  </div>
-</footer>
 
-</div><!-- /.page -->
+  </footer>
 
-<div id="toast" role="status" aria-live="polite"></div>
+</div>
 
-<!-- If your backend is deployed separately from your frontend (e.g. frontend on
-     GitHub Pages, backend on Vercel), set this to your Vercel deployment URL:
-     window.BUILD_MY_STARTUP_API_BASE = 'https://your-project.vercel.app';
-     Leave it empty if frontend + backend are served from the same Vercel project. -->
-<script>window.BUILD_MY_STARTUP_API_BASE = '';</script>
+
+<!-- ================= TOAST ================= -->
+
+<div
+  id="toast"
+  role="status"
+  aria-live="polite"
+></div>
+
+
+<!--
+  If your backend is deployed separately from your frontend
+  (e.g. frontend on GitHub Pages, backend on Vercel),
+  set this to your Vercel deployment URL.
+
+  Leave it empty if frontend + backend are served
+  from the same Vercel project.
+-->
+
+<script>
+  window.BUILD_MY_STARTUP_API_BASE = '';
+</script>
+
 <script src="script.js"></script>
+
 </body>
 </html>
