@@ -17,3 +17,4 @@ Thumbs.db
 .vercel
 # Archives
 *.zip
+.env*
